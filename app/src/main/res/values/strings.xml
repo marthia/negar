@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Negar</string>
+    <string name="strFetchingDataFromServer">Fetching Data</string>
+    <string name="strRetry">Retry</string>
+</resources>
