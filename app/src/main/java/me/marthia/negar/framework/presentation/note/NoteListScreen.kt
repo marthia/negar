@@ -35,6 +35,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import me.marthia.negar.business.domain.model.dto.DiaryDto
 import me.marthia.negar.framework.presentation.ui.ErrorMessage
 import me.marthia.negar.framework.presentation.ui.LoadingNextPageItem
 import me.marthia.negar.framework.presentation.ui.PageLoader
@@ -71,7 +72,7 @@ fun NoteListScreenContent(
         items(notes.itemCount) { index ->
             notes[index]?.let {
                 NoteItem(item = it, onClick = {
-                    navController.navigate("note/${it.noteId}")
+                    navController.navigate("note/${it.diaryId}")
                 })
             }
         }
@@ -111,7 +112,7 @@ fun NoteListScreenContent(
 }
 
 @Composable
-fun NoteItem(item: Note, onClick: () -> Unit) {
+fun NoteItem(item: DiaryDto, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(top = 16.dp, start = 16.dp, end = 16.dp),
@@ -126,7 +127,7 @@ fun NoteItem(item: Note, onClick: () -> Unit) {
             Text(text = item.title, style = MaterialTheme.typography.titleSmall)
             Divider(thickness = 1.dp, color = MaterialTheme.colorScheme.outlineVariant)
             Text(
-                text = item.body,
+                text = item.textContent,
                 maxLines = 3,
                 style = MaterialTheme.typography.bodySmall,
                 overflow = TextOverflow.Ellipsis

@@ -82,6 +82,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.moshi)
+    ksp(libs.moshi.codegen)
 
 
     // paging

@@ -15,8 +15,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.marthia.negar.business.domain.mapper.asEntity
 import me.marthia.negar.business.domain.model.dto.DiaryDto
 import me.marthia.negar.business.interactors.NoteRepository
+import me.marthia.negar.framework.presentation.note.detail.DiaryIdArg
 import me.marthia.negar.utitlies.HTMLParserImpl
 import java.io.File
 import java.nio.charset.Charset
@@ -46,9 +48,6 @@ class NotesViewModel @Inject constructor(
         }
     }
 
-    suspend fun getNote(id: Long): DiaryDto {
-        return noteRepository.getNote(id)
-    }
 
     private fun extractData(uri: Uri): String? {
 
@@ -82,7 +81,7 @@ class NotesViewModel @Inject constructor(
         noteRepository.getNotes()
             .distinctUntilChanged()
             .collect {
-//                _notesList.value = it
+                _notesList.value = it
             }
     }
 
@@ -116,7 +115,7 @@ class NotesViewModel @Inject constructor(
             val parser = HTMLParserImpl(file)
             val diary = parser.execute()
             diary?.let {
-//                noteRepository.insertNote(it)
+                noteRepository.insertNote(it.asEntity())
             }
         }
     }

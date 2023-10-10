@@ -49,6 +49,7 @@ androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-com
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 activity-compose = { group = "androidx.activity", name = "activity-compose" }
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
+moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }

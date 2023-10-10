@@ -9,7 +9,7 @@ interface INote<E : Any> {
 
     fun get(id: String): LiveData<List<E>>
 
-    fun getAll(): Flow<PagingData<Note>>
+    fun getAll(): Flow<PagingData<E>>
 
     fun save(element: E)
 
