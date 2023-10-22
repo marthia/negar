@@ -6,7 +6,7 @@ import me.marthia.negar.business.domain.model.database.DiaryEntity
 @Dao
 interface NoteDao {
 
-    @Query("SELECT * FROM t_Diary  ORDER BY id ASC LIMIT :limit OFFSET :offset")
+    @Query("SELECT * FROM t_Diary ORDER BY userEditedTimestampUsec ASC LIMIT :limit OFFSET :offset ")
     suspend fun getNotes(limit: Int, offset: Int): List<DiaryEntity>
 
     @Query("SELECT * FROM t_Diary WHERE id = :id")

@@ -16,11 +16,11 @@ fun MainNavHost(
 ) {
     NavHost(navController = navController, startDestination = "notelist") {
         composable(route = "notelist") { NoteListScreen(navController = navController) }
-        composable(route = "note?dirayId={id}", arguments = listOf(
-            navArgument("diaryId") { type = NavType.LongType }
+        composable(route = "note?diaryId={id}", arguments = listOf(
+            navArgument("id") { type = NavType.LongType }
         ))
         {
-            NoteScreen()
+            NoteScreen(navController = navController)
         }
     }
 

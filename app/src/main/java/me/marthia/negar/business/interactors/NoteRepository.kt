@@ -34,7 +34,7 @@ class NoteRepository @Inject constructor(
 
     fun getNotes(): Flow<PagingData<DiaryDto>> {
         return Pager(
-            config = PagingConfig(pageSize = 20, prefetchDistance = 2),
+            config = PagingConfig(pageSize = 20, prefetchDistance = 2, initialLoadSize = 20),
             pagingSourceFactory = {
                 NotePagingSource(noteDao)
             }

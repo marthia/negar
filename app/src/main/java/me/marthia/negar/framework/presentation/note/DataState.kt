@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.transform
 sealed class DataState<out T> {
     data class Success<out T>(val result: T) : DataState<T>()
     data class Error(val error: Throwable) : DataState<Nothing>()
+//    data object Loading : DataState<Nothing>()
 
     override fun toString(): String {
         return when (this) {

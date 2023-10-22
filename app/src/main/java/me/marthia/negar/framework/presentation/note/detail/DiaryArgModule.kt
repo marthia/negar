@@ -18,7 +18,7 @@ object DiaryArgModule {
     @Provides
     @DiaryIdArg
     @ViewModelScoped
-    fun provideGreetingNameNavArg(savedStateHandle: SavedStateHandle): String {
-        return savedStateHandle.get<String>("dirayId") ?: ""
+    fun provideGreetingNameNavArg(savedStateHandle: SavedStateHandle): Long {
+        return savedStateHandle.get<Long>("id") ?: -1L
     }
 }

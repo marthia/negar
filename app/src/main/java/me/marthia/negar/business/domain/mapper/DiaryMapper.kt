@@ -17,12 +17,12 @@ fun DiaryEntity.asDto() = DiaryDto(
 )
 
 fun DiaryJson.asEntity() = DiaryEntity(
-    color = color,
-    isTrashed = isTrashed,
-    isPinned = isPinned,
-    isArchived = isArchived,
-    textContent = textContent,
-    title = title,
+    color = color ?: "",
+    isTrashed = isTrashed ?: false,
+    isPinned = isPinned ?: false,
+    isArchived = isArchived ?: false,
+    textContent = textContent ?: "",
+    title = title ?: "",
     userEditedTimestampUsec = userEditedTimestampUsec,
     createdTimestampUsec = createdTimestampUsec,
 )
