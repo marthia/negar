@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Negar</string>
+    <string name="strFetchingDataFromServer">Fetching Data</string>
+    <string name="strRetry">Retry</string>
+    <string name="importing_from_json">Importing...</string>
+    <string name="label_note_screen_title">Title</string>
+    <string name="label_note_screen_content">Content</string>
+</resources>
