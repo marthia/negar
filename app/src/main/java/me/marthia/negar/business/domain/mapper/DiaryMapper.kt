@@ -26,3 +26,15 @@ fun DiaryJson.asEntity() = DiaryEntity(
     userEditedTimestampUsec = userEditedTimestampUsec,
     createdTimestampUsec = createdTimestampUsec,
 )
+
+fun DiaryDto.fromDto(): DiaryEntity = DiaryEntity(
+    diaryId = diaryId,
+    color = color,
+    isTrashed = isTrashed,
+    isPinned = isPinned,
+    isArchived = isArchived,
+    textContent = textContent,
+    title = title,
+    userEditedTimestampUsec = userEditedTimestampUsec,
+    createdTimestampUsec = createdTimestampUsec
+)

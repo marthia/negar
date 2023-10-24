@@ -23,5 +23,4 @@ fun MainNavHost(
             NoteScreen(navController = navController)
         }
     }
-
 }

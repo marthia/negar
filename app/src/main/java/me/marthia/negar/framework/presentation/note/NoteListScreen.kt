@@ -60,7 +60,7 @@ fun NoteListScreen(
 ) {
     Scaffold(
         bottomBar = {
-            BottomNavigation(notesViewModel = notesViewModel)
+            BottomNavigation(navController = navController, notesViewModel = notesViewModel)
         }
     ) {
         NoteListScreenContent(
@@ -150,7 +150,7 @@ fun NoteItem(item: DiaryDto, onClick: () -> Unit) {
 }
 
 @Composable
-fun BottomNavigation(notesViewModel: NotesViewModel) {
+fun BottomNavigation(navController: NavHostController, notesViewModel: NotesViewModel) {
 
     val progress = remember { mutableStateOf(false) }
     ProgressDialog(visible = progress.value, viewModel = notesViewModel) {
@@ -178,7 +178,9 @@ fun BottomNavigation(notesViewModel: NotesViewModel) {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* do something */ },
+                onClick = {
+                          navController.navigate("note?diaryId=-1")
+                },
                 containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
             ) {

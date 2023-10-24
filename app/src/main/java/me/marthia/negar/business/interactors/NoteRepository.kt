@@ -16,14 +16,14 @@ class NoteRepository @Inject constructor(
     private val noteDao: NoteDao
 ) {
 
-    suspend fun getNote(noteId: Long) = noteDao.getNoteById(noteId).asDto()
+    suspend fun getNote(noteId: Long) = noteDao.getNoteById(noteId)?.asDto()
 
     suspend fun insertNote(note: DiaryEntity): Long {
         return noteDao.insertNote(note)
     }
 
-    fun updateNote(scope: CoroutineScope, note: DiaryEntity) {
-        scope.launch { noteDao.updateNote(note) }
+    suspend fun updateNote(note: DiaryEntity) {
+        noteDao.updateNote(note)
     }
 
     suspend fun deleteNotes(notes: Collection<DiaryEntity>? = null, note: DiaryEntity? = null) {

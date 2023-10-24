@@ -10,7 +10,7 @@ interface NoteDao {
     suspend fun getNotes(limit: Int, offset: Int): List<DiaryEntity>
 
     @Query("SELECT * FROM t_Diary WHERE id = :id")
-    suspend fun getNoteById(id: Long): DiaryEntity
+    suspend fun getNoteById(id: Long): DiaryEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(noteViewModels: List<DiaryEntity>)

@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import me.marthia.negar.business.domain.mapper.fromDto
 import me.marthia.negar.business.domain.model.dto.DiaryDto
 import me.marthia.negar.business.interactors.NoteRepository
 import javax.inject.Inject
@@ -26,6 +27,39 @@ class DiaryDetailViewModel @Inject constructor(
     private fun getNote(id: Long) {
         viewModelScope.launch {
             _noteItem.value = noteRepository.getNote(id)
+        }
+    }
+
+    fun saveNewNote(title: String, content: String, item: DiaryDto?) {
+        val currentTimeMillis = System.currentTimeMillis()
+        viewModelScope.launch {
+            if (item == null)
+                noteRepository.insertNote(
+                    DiaryDto(
+                        color = "",
+                        isTrashed = false,
+                        isArchived = false,
+                        isPinned = false,
+                        textContent = content,
+                        title = title,
+                        userEditedTimestampUsec = currentTimeMillis,
+                        createdTimestampUsec = currentTimeMillis
+                    ).fromDto()
+                )
+            else
+                noteRepository.updateNote(
+                    DiaryDto(
+                        diaryId = item.diaryId,
+                        color = item.color,
+                        isTrashed = item.isTrashed,
+                        isArchived = item.isArchived,
+                        isPinned = item.isPinned,
+                        textContent = content,
+                        title = title,
+                        userEditedTimestampUsec = currentTimeMillis,
+                        createdTimestampUsec = item.createdTimestampUsec
+                    ).fromDto()
+                )
         }
     }
 }
