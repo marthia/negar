@@ -42,21 +42,21 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("com.google.android.material:material:1.5.0")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.10.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     testImplementation("com.google.truth:truth:1.1.3")
     testImplementation("org.robolectric:robolectric:4.7.3")
     testImplementation("app.cash.turbine:turbine:0.7.0")
     testImplementation("io.mockk:mockk:1.12.3")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
     // Network
 //    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
@@ -74,21 +74,21 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:1.6.7")
 
     // Local
-    implementation("androidx.room:room-ktx:2.4.2")
+    implementation("androidx.room:room-ktx:2.6.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.datastore:datastore:1.0.0")
-    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha03")
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
 
     // Common
     implementation("com.jakewharton.timber:timber:5.0.1")
-    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
+    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
 
     // Firebase
-    implementation("com.google.android.gms:play-services-base:18.0.1")
-    implementation("com.google.firebase:firebase-analytics-ktx:20.1.2")
-    implementation("com.google.firebase:firebase-crashlytics-ktx:18.2.9")
-    implementation("com.google.firebase:firebase-messaging-ktx:23.0.3")
-    implementation("com.google.firebase:firebase-config-ktx:21.0.2")
+    implementation("com.google.android.gms:play-services-base:18.2.0")
+    implementation("com.google.firebase:firebase-analytics-ktx:21.5.0")
+    implementation("com.google.firebase:firebase-crashlytics-ktx:18.5.1")
+    implementation("com.google.firebase:firebase-messaging-ktx:23.3.1")
+    implementation("com.google.firebase:firebase-config-ktx:21.5.0")
 
     // Huawei
     implementation("com.huawei.hms:base:6.4.0.303")
