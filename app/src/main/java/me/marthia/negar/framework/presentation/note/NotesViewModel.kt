@@ -6,14 +6,12 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import me.marthia.negar.business.domain.mapper.asEntity
 import me.marthia.negar.business.domain.model.dto.DiaryDto
@@ -27,9 +25,8 @@ class NotesViewModel @Inject constructor(
     private val noteRepository: NoteRepository
 ) : ViewModel() {
 
-    private val _notesList: MutableStateFlow<PagingData<DiaryDto>> =
+    var noteList: Flow<PagingData<DiaryDto>> =
         MutableStateFlow(value = PagingData.empty())
-    val notesList: StateFlow<PagingData<DiaryDto>> = _notesList.asStateFlow()
     private val moshi: Moshi = Moshi.Builder().build()
     private val jsonAdapter = moshi.adapter(DiaryJson::class.java)
 
@@ -53,13 +50,10 @@ class NotesViewModel @Inject constructor(
         return noteRepository.find("%$id%")
     }
 
-    private suspend fun getAll() {
-        noteRepository.getNotes()
-            .distinctUntilChanged()
-            .cachedIn(viewModelScope)
-            .collect {
-                _notesList.value = it
-            }
+    private fun getAll() {
+        viewModelScope.launch {
+            noteList = noteRepository.getNotes()
+        }
     }
 
 

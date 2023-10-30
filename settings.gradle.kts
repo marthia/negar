@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Negar"
 include(":app")
+include(":libraries:framework")
+include(":libraries:jetframework")

@@ -55,7 +55,8 @@ android {
 }
 
 dependencies {
-
+    implementation(project(mapOf("path" to ":libraries:framework")))
+    implementation(project(mapOf("path" to ":libraries:jetframework")))
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)

@@ -78,8 +78,7 @@ fun NoteListScreenContent(
     navController: NavHostController,
 
     ) {
-    val notes = notesViewModel.notesList.collectAsLazyPagingItems()
-
+    val notes = notesViewModel.noteList.collectAsLazyPagingItems()
 
     LazyColumn(modifier = Modifier.then(modifier)) {
         items(notes.itemCount) { index ->
@@ -179,7 +178,7 @@ fun BottomNavigation(navController: NavHostController, notesViewModel: NotesView
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                          navController.navigate("note?diaryId=-1")
+                    navController.navigate("note?diaryId=-1")
                 },
                 containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()

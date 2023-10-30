@@ -32,7 +32,7 @@ class NoteRepository @Inject constructor(
 
     suspend fun find(keyword: String) = noteDao.find(keyword).map { it.asDto() }
 
-    fun getNotes(): Flow<PagingData<DiaryDto>> {
+    suspend fun getNotes(): Flow<PagingData<DiaryDto>> {
         return Pager(
             config = PagingConfig(pageSize = 20, prefetchDistance = 2, initialLoadSize = 20),
             pagingSourceFactory = {
