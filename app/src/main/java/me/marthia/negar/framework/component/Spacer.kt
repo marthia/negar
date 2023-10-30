@@ -62,8 +62,8 @@ fun KeyboardSpacer(
     modifier: Modifier = Modifier,
     confirmHeight: (Dp) -> Dp = { it },
 ) {
-    val imeVisible = LocalWindowInsets.current.ime.isVisible
-    val imeHeight = with(LocalDensity.current) { LocalWindowInsets.current.ime.bottom.toDp() }
-    val height by animateDpAsState(if (imeVisible) confirmHeight(imeHeight) else 0.dp)
-    Spacer(modifier.height(height))
+//    val imeVisible = LocalWindowInsets.current.ime.isVisible
+//    val imeHeight = with(LocalDensity.current) { LocalWindowInsets.current.ime.bottom.toDp() }
+//    val height by animateDpAsState(if (imeVisible) confirmHeight(imeHeight) else 0.dp, label = "")
+//    Spacer(modifier.height(height))
 }

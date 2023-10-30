@@ -8,7 +8,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.developersancho.framework.BuildConfig
+import com.chuckerteam.chucker.BuildConfig
 import com.developersancho.framework.extension.classTag
 import timber.log.Timber
 
