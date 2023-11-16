@@ -16,7 +16,7 @@ interface NoteDao {
     suspend fun insertAll(noteViewModels: List<DiaryEntity>)
 
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: DiaryEntity): Long
 
     @Update
@@ -30,6 +30,9 @@ interface NoteDao {
 
     @Query("SELECT * FROM t_Diary WHERE textContent LIKE :keyword ORDER BY id COLLATE NOCASE ASC")
     suspend fun find(keyword: String): List<DiaryEntity>
+
+    @Query("UPDATE t_Diary SET title=:title , textContent=:textContent WHERE id = :diaryId")
+    suspend fun updateContent(diaryId: Long, textContent: String, title: String)
 
 
 }

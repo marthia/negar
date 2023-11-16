@@ -5,4 +5,6 @@
     <string name="importing_from_json">Importing...</string>
     <string name="label_note_screen_title">Title</string>
     <string name="label_note_screen_content">Content</string>
+    <string name="text_no_data_found">No Data</string>
+    <string name="text_retry">Retry</string>
 </resources>

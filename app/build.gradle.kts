@@ -61,7 +61,7 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
-
+    implementation(libs.androidx.appcompat)
 
     // compose
     implementation(libs.ui)
@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.compose.foundation)
     implementation(libs.compose.material.iconsExtended)
+    implementation(libs.compose.material.icons)
 
     // hilt
     ksp(libs.hilt.compiler)
@@ -85,10 +86,12 @@ dependencies {
     implementation(libs.moshi)
     ksp(libs.moshi.codegen)
 
-
+    implementation(libs.android.lottie.compose)
     // paging
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.paging.compose)
+
+
 
     // navigation
     implementation(libs.androidx.navigation.compose)

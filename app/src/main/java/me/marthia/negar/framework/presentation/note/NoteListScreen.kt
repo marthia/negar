@@ -47,27 +47,53 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.developersancho.framework.base.mvi.BaseViewState
+import com.developersancho.framework.extension.cast
+import com.developersancho.jetframework.rememberFlowWithLifecycle
 import me.marthia.negar.R
 import me.marthia.negar.business.domain.model.dto.DiaryDto
+import me.marthia.negar.framework.component.ProgressIndicator
 import me.marthia.negar.framework.presentation.ui.ErrorMessage
 import me.marthia.negar.framework.presentation.ui.LoadingNextPageItem
 import me.marthia.negar.framework.presentation.ui.PageLoader
+import me.marthia.negar.framework.presentation.ui.widget.EmptyView
+import me.marthia.negar.framework.presentation.ui.widget.ErrorView
 
 @Composable
 fun NoteListScreen(
     notesViewModel: NotesViewModel = hiltViewModel(),
     navController: NavHostController = rememberNavController()
 ) {
+
+    val uiState by notesViewModel.uiState.collectAsState()
     Scaffold(
         bottomBar = {
             BottomNavigation(navController = navController, notesViewModel = notesViewModel)
         }
     ) {
-        NoteListScreenContent(
-            modifier = Modifier.padding(it),
-            notesViewModel = notesViewModel,
-            navController = navController
-        )
+        when (uiState) {
+            is BaseViewState.Loading -> {
+                ProgressIndicator()
+            }
+
+            is BaseViewState.Error -> {
+                ErrorView(e = Throwable("There was an error loading data")) {}
+            }
+
+            is BaseViewState.Empty -> {
+                EmptyView()
+            }
+
+            is BaseViewState.Data -> {
+                val state = uiState.cast<BaseViewState.Data<NoteState>>().value
+                NoteListScreenContent(
+                    modifier = Modifier.padding(it),
+                    notesViewModel = notesViewModel,
+                    navController = navController,
+                    state = state,
+                )
+            }
+        }
     }
 }
 
@@ -76,10 +102,9 @@ fun NoteListScreenContent(
     modifier: Modifier = Modifier,
     notesViewModel: NotesViewModel,
     navController: NavHostController,
-
-    ) {
-    val notes = notesViewModel.noteList.collectAsLazyPagingItems()
-
+    state: NoteState,
+) {
+    val notes = rememberFlowWithLifecycle(flow = state.data).collectAsLazyPagingItems()
     LazyColumn(modifier = Modifier.then(modifier)) {
         items(notes.itemCount) { index ->
             notes[index]?.let {

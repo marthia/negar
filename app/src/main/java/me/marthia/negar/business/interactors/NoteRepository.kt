@@ -1,14 +1,7 @@
 package me.marthia.negar.business.interactors
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import me.marthia.negar.business.domain.mapper.asDto
 import me.marthia.negar.business.domain.model.database.DiaryEntity
-import me.marthia.negar.business.domain.model.dto.DiaryDto
 import me.marthia.negar.framework.datasource.database.NoteDao
 import javax.inject.Inject
 
@@ -32,12 +25,14 @@ class NoteRepository @Inject constructor(
 
     suspend fun find(keyword: String) = noteDao.find(keyword).map { it.asDto() }
 
-    suspend fun getNotes(): Flow<PagingData<DiaryDto>> {
-        return Pager(
-            config = PagingConfig(pageSize = 20, prefetchDistance = 2, initialLoadSize = 20),
-            pagingSourceFactory = {
-                NotePagingSource(noteDao)
-            }
-        ).flow
+    suspend fun getNotes(
+        limit: Int,
+        offset: Int,
+//             options: Map<String, String>
+    ) = noteDao.getNotes(limit, offset)
+
+
+    suspend fun updateContent(diaryId: Long, textContent: String, title: String) {
+        noteDao.updateContent(diaryId, textContent, title)
     }
 }

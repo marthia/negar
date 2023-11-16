@@ -4,16 +4,16 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import me.marthia.negar.business.domain.mapper.asDto
 import me.marthia.negar.business.domain.model.dto.DiaryDto
-import me.marthia.negar.framework.datasource.database.NoteDao
+import timber.log.Timber
 
 class NotePagingSource(
-    private val dao: NoteDao
+    private val repo: NoteRepository
 ) : PagingSource<Int, DiaryDto>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DiaryDto> {
         val page = params.key ?: 1
 
         return try {
-            val entities = dao.getNotes(params.loadSize, page * params.loadSize)
+            val entities = repo.getNotes(params.loadSize, page * params.loadSize)
 
             LoadResult.Page(
                 data = entities.map { it.asDto() },
@@ -21,6 +21,7 @@ class NotePagingSource(
                 nextKey = if (entities.isEmpty()) null else page + 1
             )
         } catch (e: Exception) {
+            Timber.e("Error Loading Notes ${e.message}")
             LoadResult.Error(e)
         }
     }

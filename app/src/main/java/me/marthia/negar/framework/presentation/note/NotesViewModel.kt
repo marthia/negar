@@ -2,42 +2,42 @@ package me.marthia.negar.framework.presentation.note
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import com.squareup.moshi.Moshi
+import androidx.paging.PagingConfig
+import com.developersancho.framework.base.mvi.BaseViewState
+import com.developersancho.framework.base.mvi.MviViewModel
+import com.developersancho.framework.extension.fromJson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.marthia.negar.business.domain.mapper.asEntity
 import me.marthia.negar.business.domain.model.dto.DiaryDto
 import me.marthia.negar.business.domain.model.file.DiaryJson
+import me.marthia.negar.business.interactors.GetNotes
 import me.marthia.negar.business.interactors.NoteRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class NotesViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val noteRepository: NoteRepository
-) : ViewModel() {
+    private val getNotes: GetNotes,
+    private val noteRepository: NoteRepository,
+) : MviViewModel<BaseViewState<NoteState>, NoteEvent>() {
 
-    var noteList: Flow<PagingData<DiaryDto>> =
-        MutableStateFlow(value = PagingData.empty())
-    private val moshi: Moshi = Moshi.Builder().build()
-    private val jsonAdapter = moshi.adapter(DiaryJson::class.java)
+    private val pagingConfig =
+        PagingConfig(pageSize = 20, prefetchDistance = 2, initialLoadSize = 20)
 
     private val _importingProgress = MutableStateFlow(0.0f)
     val importingProgress = _importingProgress.asStateFlow()
 
     init {
-        onEvent(NoteEvent.GetNotes)
+        onTriggerEvent(NoteEvent.GetNotes)
     }
 
-    fun onEvent(event: NoteEvent) {
+    override fun onTriggerEvent(event: NoteEvent) {
         viewModelScope.launch {
             when (event) {
                 is NoteEvent.GetNotes -> getAll()
@@ -51,26 +51,9 @@ class NotesViewModel @Inject constructor(
     }
 
     private fun getAll() {
-        viewModelScope.launch {
-            noteList = noteRepository.getNotes()
+        safeLaunch {
+            setState(BaseViewState.Data(NoteState(getNotes.invoke(GetNotes.Params(pagingConfig = pagingConfig)))))
         }
-    }
-
-
-    private fun save(element: DiaryDto) {
-        TODO("Not yet implemented")
-    }
-
-    private fun delete(element: DiaryDto) {
-        viewModelScope.launch {
-//            noteRepository.deleteNotes(
-//                note = element
-//            )
-        }
-    }
-
-    private fun edit(element: DiaryDto) {
-        TODO("Not yet implemented")
     }
 
     fun saveFromUri(uri: List<Uri>) {
@@ -85,24 +68,13 @@ class NotesViewModel @Inject constructor(
             viewModelScope.launch {
                 val json = context.contentResolver?.openInputStream(uri)?.bufferedReader()
                     .use { it?.readText() }
-                jsonAdapter.fromJson(json)?.let {
+                json?.fromJson<DiaryJson>()?.let {
                     noteRepository.insertNote(it.asEntity())
                 }
             }
         } catch (e: Exception) {
-            Log.e("SAVER", "Could not save item: $e")
+            Timber.e("SAVER", "Could not save item: $e")
         }
     }
-
-    fun delete(elements: Collection<DiaryDto>) {
-        viewModelScope.launch {
-//            noteRepository.deleteNotes(notes = elements)
-        }
-    }
-
 }
 
-sealed class NoteEvent {
-    data object GetNotes : NoteEvent()
-    data class Search(val query: String) : NoteEvent()
-}
